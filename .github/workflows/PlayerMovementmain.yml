@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    private CharacterController controller;
+    public float speed = 5.0f;
+    public Animator playerAnimator;
+    // Start is called before the first frame update
+    void Start()
+    {
+        controller = GetComponent<CharacterController>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        //Horizontal D is 1, A is -1
+        //Vertical W is 1, S is -1
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+        controller.Move(move * speed * Time.deltaTime);
+        playerAnimator.SetFloat("Player Run", controller.velocity.sqrMagnitude);
+    }
+}
