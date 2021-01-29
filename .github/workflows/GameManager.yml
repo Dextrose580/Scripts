@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameObject.FindObjectOfType<PlayerRotation>().GetComponent<PlayerRotation>().enabled = false;
+            GameObject.FindObjectOfType<UIManager>().GetComponent<UIManager>().PauseMenu(true);
+            Time.timeScale = 0;
+        }
+    }
+    public void ResumeGame()
+    {
+        GameObject.FindObjectOfType<PlayerRotation>().GetComponent<PlayerRotation>().enabled = true;
+        GameObject.FindObjectOfType<UIManager>().GetComponent<UIManager>().PauseMenu(false);
+        Time.timeScale = 1;
+    }
+    public void LoadScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+        Time.timeScale = 1;
+    }
+
+    public void GameOver()
+    {
+        if(GetComponent<UIManager>().gameOverScreen == true)
+        {
+            GameObject.FindObjectOfType<UIManager>().GetComponent<UIManager>().GameOverScreen(true);
+            GetComponent<PlayerRotation>().enabled = false;
+            Time.timeScale = 0;
+        }
+    }
+}
